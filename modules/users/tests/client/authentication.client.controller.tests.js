@@ -68,7 +68,7 @@
                 name: 'articles.create'
               },
               params: {},
-              href: '/articles/create'
+              href: '/questions/create'
             };
 
             spyOn($state, 'transitionTo');

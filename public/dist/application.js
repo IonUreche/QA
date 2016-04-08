@@ -147,12 +147,12 @@
     $stateProvider
       .state('articles', {
         abstract: true,
-        url: '/articles',
+        url: '/questions',
         template: '<ui-view/>'
       })
       .state('articles.list', {
         url: '',
-        templateUrl: 'modules/articles/client/views/list-articles.client.view.html',
+        templateUrl: 'modules/questions/client/views/list-questions.client.view.html',
         controller: 'ArticlesListController',
         controllerAs: 'vm',
         data: {
@@ -161,7 +161,7 @@
       })
       .state('articles.create', {
         url: '/create',
-        templateUrl: 'modules/articles/client/views/form-article.client.view.html',
+        templateUrl: 'modules/questions/client/views/form-question.client.view.html',
         controller: 'ArticlesController',
         controllerAs: 'vm',
         resolve: {
@@ -174,7 +174,7 @@
       })
       .state('articles.edit', {
         url: '/:articleId/edit',
-        templateUrl: 'modules/articles/client/views/form-article.client.view.html',
+        templateUrl: 'modules/questions/client/views/form-question.client.view.html',
         controller: 'ArticlesController',
         controllerAs: 'vm',
         resolve: {
@@ -187,7 +187,7 @@
       })
       .state('articles.view', {
         url: '/:articleId',
-        templateUrl: 'modules/articles/client/views/view-article.client.view.html',
+        templateUrl: 'modules/questions/client/views/view-question.client.view.html',
         controller: 'ArticlesController',
         controllerAs: 'vm',
         resolve: {
@@ -293,7 +293,7 @@
   ArticlesService.$inject = ['$resource'];
 
   function ArticlesService($resource) {
-    return $resource('api/articles/:articleId', {
+    return $resource('api/questions/:articleId', {
       articleId: '@_id'
     }, {
       update: {
