@@ -71,13 +71,12 @@
             }
         }
 
-        function addVote(index) {
-            answer = question.answers[index];
-            console.log({answer: answer, user: Authentication.user});
-            $http.post('api/votes/', {answer: answer, user: Authentication.user, question_id: vm.question._id}).then(successCallback, errorCallback);
+        function addVote(index, isUpVote) {
+            var answer = question.answers[index];
+
+            $http.post('api/votes/', {answer: answer, user: Authentication.user, question_id: vm.question._id, isUpVote: isUpVote}).then(successCallback, errorCallback);
 
             function successCallback(res) {
-                console.log(res);
                 answer.voteCount = res.data.answer.voteCount;
             }
 

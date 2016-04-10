@@ -12,46 +12,66 @@ var path = require('path'),
     Vote = mongoose.model('Vote'),
     _ = require('lodash');
 
+var errHand = function (err, question) {
+    if (err) {
+        return res.status(400).send({
+            message: errorHandler.getErrorMessage(err)
+        });
+    }
+}
+
 /**
  * Create a Vote
  */
 exports.create = function (req, res) {
-    var user = req.body.user;
-    var answer = req.body.answer;
+    var userId = req.body.user._id;
+    var answerId = req.body.answer._id;
+    var isUpVote = req.body.isUpVote;
 
-    User.findById(user._id, function (err, user) {
-        Answer.findById(answer._id, function (err, answer) {
+    User.findById(userId, function (err, user) {
+        Answer.findById(answerId, function (err, answer) {
             Vote.find({answer: answer, user: user}, function (err, votes) {
                 if (err) {
                     return res.status(400).send({
                         message: errorHandler.getErrorMessage(err)
                     });
                 } else if (votes.length == 0) {
-                    var vote = Vote({answer: answer, user: user});
-                    vote.save();
-                    answer.voteCount++;
-                    console.log('answer', answer);
+                    var vote = Vote({answer: answer, user: user, isUpVote: isUpVote});
+                    vote.save(errHand);
+
+                    if (isUpVote)
+                        answer.voteCount++;
+                    else {
+                        answer.voteCount--;
+                    }
+
+                    answer.save(errHand);
+                } else {
+                    vote = votes[0];
+                    if (vote.isUpVote == isUpVote)
+                        return res.status(200).send({answer: answer});
+                    else if (isUpVote) {
+                        vote.remove();
+                        answer.voteCount += 1;
+                    } else {
+                        vote.remove();
+                        answer.voteCount -= 1;
+                    }
                     answer.save();
-
-                    Question.update(
-                        {'answers._id': answer._id},
-                        {
-                            '$set': {
-                                'answers.$.voteCount': answer.voteCount
-                            }
-                        },
-                        function (err, question) {
-                            console.log(question);
-                            if (err) {
-                                return res.status(400).send({
-                                    message: errorHandler.getErrorMessage(err)
-                                });
-                            }
-                        }
-                    );
-
-                    return res.status(200).send({answer: answer});
                 }
+
+                Question.update({'answers._id': answer._id},
+                    {'$set': {'answers.$.voteCount': answer.voteCount}},
+                    function (err, question) {
+                        if (err) {
+                            return res.status(400).send({
+                                message: errorHandler.getErrorMessage(err)
+                            });
+                        }
+                    }
+                );
+
+                return res.status(200).send({answer: answer});
             })
         });
     });

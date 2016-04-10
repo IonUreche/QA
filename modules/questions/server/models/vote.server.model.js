@@ -13,6 +13,7 @@ var mongoose = require('mongoose'),
  */
 var VoteSchema = new Schema({
 	id: Schema.ObjectId,
+    isUpVote: Boolean,
 	answer: AnswerSchema,
 	user: UserSchema
 });

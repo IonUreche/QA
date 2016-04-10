@@ -36,7 +36,8 @@
                 <p class="list-group-item-text" ng-bind="answer.text"></p>
             </pre>
             <span ng-bind="answer.voteCount"></span>
-            <button ng-click="vm.addVote($index)">UpVote</button>
+            <button ng-click="vm.addVote($index, true)">UpVote</button>
+            <button ng-click="vm.addVote($index, false)">DownVote</button>
         </div>
     </div>
 
