@@ -21,6 +21,10 @@ var AnswerSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	voteCount: {
+		type: Number,
+		default: 0
+	},
 	user: UserSchema
 });
 

@@ -4,9 +4,9 @@
         .module('questions')
         .controller('QuestionsController', QuestionsController);
 
-    QuestionsController.$inject = ['$scope', '$state', 'questionResolve', 'answerResolve', '$window', 'Authentication'];
+    QuestionsController.$inject = ['$scope', '$state', 'questionResolve', 'answerResolve', '$window', 'Authentication', '$http'];
 
-    function QuestionsController($scope, $state, question, answer, $window, Authentication) {
+    function QuestionsController($scope, $state, question, answer, $window, Authentication, $http) {
         var vm = this;
 
         vm.question = question;
@@ -17,6 +17,7 @@
         vm.remove = remove;
         vm.save = save;
         vm.saveAnswer = saveAnswer;
+        vm.addVote = addVote;
 
         // Remove existing Question
         function remove() {
@@ -57,12 +58,27 @@
                 return false;
             }
 
-            vm.answer.question_id = vm.question._id
+            vm.answer.question_id = vm.question._id;
 
             vm.answer.$save(successCallback, errorCallback);
 
             function successCallback(res) {
                 $window.location.reload();
+            }
+
+            function errorCallback(res) {
+                vm.error = res.data.message;
+            }
+        }
+
+        function addVote(index) {
+            answer = question.answers[index];
+            console.log({answer: answer, user: Authentication.user});
+            $http.post('api/votes/', {answer: answer, user: Authentication.user, question_id: vm.question._id}).then(successCallback, errorCallback);
+
+            function successCallback(res) {
+                console.log(res);
+                answer.voteCount = res.data.answer.voteCount;
             }
 
             function errorCallback(res) {

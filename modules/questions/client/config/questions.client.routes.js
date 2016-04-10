@@ -69,6 +69,7 @@
   getQuestion.$inject = ['$stateParams', 'QuestionsService'];
 
   function getQuestion($stateParams, QuestionsService) {
+    console.log('getting-------------------------------');
     return QuestionsService.get({
       questionId: $stateParams.questionId
     }).$promise;
