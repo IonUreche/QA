@@ -29,6 +29,7 @@
         controller: 'QuestionsController',
         controllerAs: 'vm',
         resolve: {
+          answerResolve: function(){},
           questionResolve: newQuestion
         },
         data: {
@@ -42,6 +43,7 @@
         controller: 'QuestionsController',
         controllerAs: 'vm',
         resolve: {
+          answerResolve: function(){},
           questionResolve: getQuestion
         },
         data: {
@@ -55,6 +57,7 @@
         controller: 'QuestionsController',
         controllerAs: 'vm',
         resolve: {
+          answerResolve: newAnswer,
           questionResolve: getQuestion
         },
         data: {
@@ -71,9 +74,23 @@
     }).$promise;
   }
 
+  getAnswer.$inject = ['$stateParams', 'AnswersService'];
+
+  function getAnswer($stateParams, AnswersService) {
+    return AnswersService.get({
+      answerId: $stateParams.answerId
+    }).$promise;
+  }
+
   newQuestion.$inject = ['QuestionsService'];
 
   function newQuestion(QuestionsService) {
     return new QuestionsService();
+  }
+
+  newAnswer.$inject = ['AnswersService'];
+
+  function newAnswer(AnswersService) {
+    return new AnswersService();
   }
 }());

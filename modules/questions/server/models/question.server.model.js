@@ -4,31 +4,31 @@
  * Module dependencies
  */
 var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+    UserSchema = require('../../../users/server/models/user.server.model.js'),
+    AnswerSchema = require('./answer.server.model.js'),
+    Schema = mongoose.Schema;
 
 /**
  * Question Schema
  */
 var QuestionSchema = new Schema({
-  created: {
-    type: Date,
-    default: Date.now
-  },
   title: {
     type: String,
     default: '',
     trim: true,
     required: 'Title cannot be blank'
   },
-  content: {
+  description: {
     type: String,
     default: '',
     trim: true
   },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  }
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
+  answers: [ AnswerSchema ],
+  user: UserSchema
 });
 
 mongoose.model('Question', QuestionSchema);

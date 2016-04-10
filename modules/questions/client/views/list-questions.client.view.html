@@ -6,13 +6,13 @@
     <a ng-repeat="question in vm.questions" ui-sref="questions.view({ questionId: question._id })" class="list-group-item">
       <small class="list-group-item-text">
         Posted on
-        <span ng-bind="question.created | date:'mediumDate'"></span>
+        <span ng-bind="question.created_at | date:'mediumDate'"></span>
         by
         <span ng-if="question.user" ng-bind="question.user.displayName"></span>
         <span ng-if="!question.user">Deleted User</span>
       </small>
       <h4 class="list-group-item-heading" ng-bind="question.title"></h4>
-      <p class="list-group-item-text" ng-bind="question.content"></p>
+      <p class="list-group-item-text" ng-bind="question.description"></p>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.questions.$resolved && !vm.questions.length">
