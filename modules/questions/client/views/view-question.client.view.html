@@ -1,6 +1,15 @@
 <section>
     <div class="page-header">
-        <h1 ng-bind="vm.question.title"></h1>
+        <h1 ng-bind="vm.question.title" style="display: inline"></h1>
+        <span style="display: inline; font-size: 2em; color: #00A000" ng-show="vm.question.is_resolved">
+            <i class="glyphicon glyphicon-ok"></i> (Solved)
+        </span>
+        <button ng-click="vm.reopenQuestion()"
+                ng-show="vm.question.is_resolved"
+                class="btn btn-danger"
+                style="float: right">
+            Reopen Question
+        </button>
     </div>
     <div class="pull-right" ng-show="vm.question.isCurrentUserOwner">
         <a class="btn btn-primary" ui-sref="questions.edit({ questionId: vm.question._id })">
@@ -38,6 +47,13 @@
             <span ng-bind="answer.voteCount"></span>
             <button ng-click="vm.addVote($index, true)">UpVote</button>
             <button ng-click="vm.addVote($index, false)">DownVote</button>
+            <button ng-click="vm.resolveQuestion($index)" ng-hide="vm.question.is_resolved" class="btn btn-success">
+                Resolves Question
+            </button>
+            <span style="display: inline; font-size: 2em; color: #7a43b6; float: right;"
+                  ng-show="answer._id == vm.question.resolving_answer_id">
+                <i class="glyphicon glyphicon-star"></i>(Best answer)
+            </span>
         </div>
     </div>
 
