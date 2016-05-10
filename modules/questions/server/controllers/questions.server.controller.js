@@ -6,6 +6,7 @@
 var path = require('path'),
     mongoose = require('mongoose'),
     Question = mongoose.model('Question'),
+    User = mongoose.model('User'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -63,6 +64,7 @@ exports.update = function (req, res) {
 exports.resolve = function (req, res) {
     var question = req.question;
     var answerId = req.body.answer._id;
+    var userId = req.body.user._id;
 
     Question.findById(question._id).exec(function (err, question) {
         if (err) {
@@ -78,11 +80,25 @@ exports.resolve = function (req, res) {
         question.save();
     });
 
+    User.findById(userId, function (err, user) {
+        if (err) {
+            return err;
+        } else if (!user) {
+            return res.send({
+                message: 'No user with that identifier has been found'
+            });
+        }
+
+        user.score += 100;
+        user.save();
+    });
+
     res.json(question);
-};
+ };
 
 exports.reopen = function (req, res) {
     var question = req.question;
+    var userId = req.body.user._id;
 
     Question.findById(question._id).exec(function (err, question) {
         if (err) {
@@ -96,6 +112,19 @@ exports.reopen = function (req, res) {
         question.is_resolved = false;
         question.resolving_answer_id = '';
         question.save();
+    });
+
+    User.findById(userId, function (err, user) {
+        if (err) {
+            return err;
+        } else if (!user) {
+            return res.send({
+                message: 'No user with that identifier has been found'
+            });
+        }
+
+        user.score -= 100;
+        user.save();
     });
 
     res.json(question);
