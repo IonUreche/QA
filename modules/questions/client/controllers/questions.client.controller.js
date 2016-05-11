@@ -20,6 +20,7 @@
         vm.addVote = addVote;
         vm.resolveQuestion = resolveQuestion;
         vm.reopenQuestion = reopenQuestion;
+        vm.sortedArray = sortedArray;
 
         // Remove existing Question
         function remove() {
@@ -73,6 +74,21 @@
             }
         }
 
+       function customOrder(question, answer) {
+           var sortRating = question.resolving_answer_id == answer._id ? 2000000000 : 0;
+
+            return sortRating + answer.voteCount;
+        }
+
+        function sortedArray(question, answersArray)
+        {
+            var resultArray = answersArray.slice();
+            resultArray.sort(function (a,b){
+                return customOrder(question, a) < customOrder(question,b);
+            });
+            return resultArray;
+        }
+
         function addVote(answer, isUpVote) {
             //var answer = question.answers[index];
             //var answer = $event.target;
@@ -87,8 +103,8 @@
             }
         }
 
-        function resolveQuestion(index) {
-            var answer = question.answers[index];
+        function resolveQuestion(answer) {
+
             console.log(answer.user);
 
             $http.post(

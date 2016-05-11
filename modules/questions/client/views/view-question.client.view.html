@@ -42,7 +42,7 @@
     </div>
 
     <div class="list-group" style="margin: 20px">
-        <div ng-repeat="answer in vm.question.answers | orderBy: '-voteCount'" class="list-group-item" style="margin-left: 3%">
+        <div ng-repeat="answer in vm.sortedArray(vm.question, vm.question.answers)" class="list-group-item" style="margin-left: 3%">
             <small class="list-group-item-text">
                 Posted on
                 <span ng-bind="answer.created_at | date:'mediumDate'"></span>
@@ -60,7 +60,7 @@
                 <button type="button" class="btn btn-success" ng-click="vm.addVote(answer, true)"> <span class="glyphicon glyphicon-thumbs-up"></span> </button>
                 <button type="button" class="btn btn-danger" ng-click="vm.addVote(answer, false)"> <span class="glyphicon glyphicon-thumbs-down"></span> </button>
 
-                <button ng-click="vm.resolveQuestion($index)" ng-show="!vm.question.is_resolved && vm.question.isCurrentUserOwner" class="btn btn-success">
+                <button ng-click="vm.resolveQuestion(answer)" ng-show="!vm.question.is_resolved && vm.question.isCurrentUserOwner" class="btn btn-success">
                     Resolves Question
                 </button>
                 <span style="display: inline; font-size: 2em; color: #7a43b6; float: right;"
