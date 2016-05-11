@@ -18,6 +18,8 @@
         vm.save = save;
         vm.saveAnswer = saveAnswer;
         vm.addVote = addVote;
+        vm.resolveQuestion = resolveQuestion;
+        vm.reopenQuestion = reopenQuestion;
 
         // Remove existing Question
         function remove() {
@@ -78,6 +80,47 @@
 
             function successCallback(res) {
                 answer.voteCount = res.data.answer.voteCount;
+            }
+
+            function errorCallback(res) {
+                vm.error = res.data.message;
+            }
+        }
+
+        function resolveQuestion(index) {
+            var answer = question.answers[index];
+            console.log(answer.user);
+
+            $http.post(
+                'api/questions/resolve/' + vm.question._id,
+                {answer: answer, user: answer.user, question_id: vm.question._id}
+            ).then(successCallback, errorCallback);
+
+            function successCallback(res) {
+                question.is_resolved = true
+                question.resolving_answer_id = answer._id;
+                if(answer.user._id == Authentication.user._id)
+                    Authentication.user.score += 100;
+            }
+
+            function errorCallback(res) {
+                vm.error = res.data.message;
+            }
+        }
+
+        function reopenQuestion() {
+            var answer = question.answers.filter(function(answer){ return answer._id == question.resolving_answer_id})[0];
+
+            $http.post(
+                'api/questions/reopen/' + vm.question._id,
+                {user: answer.user, question_id: vm.question._id}
+            ).then(successCallback, errorCallback);
+
+            function successCallback(res) {
+                question.is_resolved = false;
+                question.resolving_answer_id = '';
+                if(answer.user._id == Authentication.user._id)
+                    Authentication.user.score -= 100;
             }
 
             function errorCallback(res) {

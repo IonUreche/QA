@@ -12,23 +12,31 @@ var mongoose = require('mongoose'),
  * Question Schema
  */
 var QuestionSchema = new Schema({
-  title: {
-    type: String,
-    default: '',
-    trim: true,
-    required: 'Title cannot be blank'
-  },
-  description: {
-    type: String,
-    default: '',
-    trim: true
-  },
-  created_at: {
-    type: Date,
-    default: Date.now
-  },
-  answers: [ AnswerSchema ],
-  user: UserSchema
+    title: {
+        type: String,
+        default: '',
+        trim: true,
+        required: 'Title cannot be blank'
+    },
+    description: {
+        type: String,
+        default: '',
+        trim: true
+    },
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    is_resolved: {
+        type: Boolean,
+        default: false
+    },
+    resolving_answer_id: {
+        type: String,
+        default: ""
+    },
+    answers: [AnswerSchema],
+    user: UserSchema
 });
 
 mongoose.model('Question', QuestionSchema);

@@ -1,6 +1,15 @@
 <section>
     <div class="page-header">
-        <h1 ng-bind="vm.question.title"></h1>
+        <h1 ng-bind="vm.question.title" style="display: inline"></h1>
+        <span style="display: inline; font-size: 2em; color: #00A000" ng-show="vm.question.is_resolved">
+            <i class="glyphicon glyphicon-ok"></i> (Solved)
+        </span>
+        <button ng-click="vm.reopenQuestion()"
+                ng-show="vm.question.is_resolved && vm.question.isCurrentUserOwner"
+                class="btn btn-danger"
+                style="float: right">
+            Reopen Question
+        </button>
     </div>
 
     <small>
@@ -32,7 +41,7 @@
         </div>
     </div>
 
-    <div class="list-group">
+    <div class="list-group" style="margin: 20px">
         <div ng-repeat="answer in vm.question.answers" class="list-group-item" style="margin-left: 3%">
             <small class="list-group-item-text">
                 Posted on
@@ -44,11 +53,20 @@
             <pre>
                 <p class="list-group-item-text" ng-bind="answer.text"></p>
             </pre>
+
             <div class="row-group">
                 <span class="badge badge-info" ng-bind="answer.voteCount"></span>
 
                 <button type="button" class="btn btn-success" ng-click="vm.addVote($index, true)"> <span class="glyphicon glyphicon-thumbs-up"></span> </button>
                 <button type="button" class="btn btn-danger" ng-click="vm.addVote($index, false)"> <span class="glyphicon glyphicon-thumbs-down"></span> </button>
+
+                <button ng-click="vm.resolveQuestion($index)" ng-show="!vm.question.is_resolved && vm.question.isCurrentUserOwner" class="btn btn-success">
+                    Resolves Question
+                </button>
+                <span style="display: inline; font-size: 2em; color: #7a43b6; float: right;"
+                      ng-show="answer._id == vm.question.resolving_answer_id">
+                    <i class="glyphicon glyphicon-star"></i>(Best answer)
+                </span>
             </div>
 
         </div>
