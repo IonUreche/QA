@@ -73,9 +73,9 @@
             }
         }
 
-        function addVote(index, isUpVote) {
-            var answer = question.answers[index];
-
+        function addVote(answer, isUpVote) {
+            //var answer = question.answers[index];
+            //var answer = $event.target;
             $http.post('api/votes/', {answer: answer, user: Authentication.user, question_id: vm.question._id, isUpVote: isUpVote}).then(successCallback, errorCallback);
 
             function successCallback(res) {
