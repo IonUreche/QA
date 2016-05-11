@@ -25,12 +25,16 @@
         <p class="lead" ng-bind="vm.question.description"></p>
     </pre>
 
-    <div class="btn-block" ng-show="vm.question.isCurrentUserOwner">
-        <span class="badge badge-info"> 0 </span>
-        <button type="button" class="btn btn-success"> <span class="glyphicon glyphicon-thumbs-up"></span></button>
-        <button type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-thumbs-down"></span></button>
+    <div class="btn-block">
 
-        <div class="right-align">
+        <span class="badge badge-info"> 0 </span>
+        <!--
+        <span ng-show="!vm.question.isCurrentUserOwner">
+            <button type="button" class="btn btn-success"> <span class="glyphicon glyphicon-thumbs-up"></span></button>
+            <button type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-thumbs-down"></span></button>
+        </span>
+        -->
+        <div class="right-align" ng-show="vm.question.isCurrentUserOwner">
             <a class="btn btn-info" ui-sref="questions.edit({ questionId: vm.question._id })">
                 <i class="glyphicon glyphicon-edit"></i>
             </a>

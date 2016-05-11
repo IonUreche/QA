@@ -21,6 +21,7 @@
         vm.resolveQuestion = resolveQuestion;
         vm.reopenQuestion = reopenQuestion;
         vm.sortedArray = sortedArray;
+        vm.currentUserIsQuestionAuthor = currentUserIsQuestionAuthor;
 
         // Remove existing Question
         function remove() {
@@ -74,6 +75,11 @@
             }
         }
 
+        function currentUserIsQuestionAuthor(question)
+        {
+            return question.user._id == Authentication.user._id;
+        }
+
        function customOrder(question, answer) {
            var sortRating = question.resolving_answer_id == answer._id ? 2000000000 : 0;
 
@@ -90,8 +96,7 @@
         }
 
         function addVote(answer, isUpVote) {
-            //var answer = question.answers[index];
-            //var answer = $event.target;
+
             $http.post('api/votes/', {answer: answer, user: Authentication.user, question_id: vm.question._id, isUpVote: isUpVote}).then(successCallback, errorCallback);
 
             function successCallback(res) {
