@@ -14,8 +14,8 @@ var mongoose = require('mongoose'),
 var VoteSchema = new Schema({
 	id: Schema.ObjectId,
     isUpVote: Boolean,
-	answer: AnswerSchema,
-	user: UserSchema
+	answerId: String,
+	userId: String
 });
 
 mongoose.model('Vote', VoteSchema);

@@ -74,12 +74,23 @@
         }
 
         function addVote(answer, isUpVote) {
-            //var answer = question.answers[index];
-            //var answer = $event.target;
-            $http.post('api/votes/', {answer: answer, user: Authentication.user, question_id: vm.question._id, isUpVote: isUpVote}).then(successCallback, errorCallback);
+            $http
+                .post(
+                    'api/votes/',
+                    {answer: answer, user: Authentication.user, question_id: vm.question._id, isUpVote: isUpVote})
+                .then(successCallback, errorCallback);
 
             function successCallback(res) {
-                answer.voteCount = res.data.answer.voteCount;
+                if(answer.voteCount != res.data.answer.voteCount) {
+                    answer.voteCount = res.data.answer.voteCount;
+
+                    if (answer.user._id == Authentication.user._id)
+                        if (isUpVote)
+                            Authentication.user.score += 5;
+                        else
+                            Authentication.user.score -= 5;
+                }
+
             }
 
             function errorCallback(res) {
@@ -99,7 +110,7 @@
             function successCallback(res) {
                 question.is_resolved = true
                 question.resolving_answer_id = answer._id;
-                if(answer.user._id == Authentication.user._id)
+                if (answer.user._id == Authentication.user._id)
                     Authentication.user.score += 100;
             }
 
@@ -109,7 +120,9 @@
         }
 
         function reopenQuestion() {
-            var answer = question.answers.filter(function(answer){ return answer._id == question.resolving_answer_id})[0];
+            var answer = question.answers.filter(function (answer) {
+                return answer._id == question.resolving_answer_id
+            })[0];
 
             $http.post(
                 'api/questions/reopen/' + vm.question._id,
@@ -119,7 +132,7 @@
             function successCallback(res) {
                 question.is_resolved = false;
                 question.resolving_answer_id = '';
-                if(answer.user._id == Authentication.user._id)
+                if (answer.user._id == Authentication.user._id)
                     Authentication.user.score -= 100;
             }
 

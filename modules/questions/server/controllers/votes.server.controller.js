@@ -18,6 +18,19 @@ var errHand = function (err, question) {
             message: errorHandler.getErrorMessage(err)
         });
     }
+};
+
+function updateUserScore(userId, score) {
+    User.findById(userId, function (err, user) {
+        if (err) {
+            return err;
+        } else if (!user) {
+            return 'No user with that identifier has been found';
+        }
+
+        user.score += score;
+        user.save();
+    });
 }
 
 /**
@@ -28,51 +41,53 @@ exports.create = function (req, res) {
     var answerId = req.body.answer._id;
     var isUpVote = req.body.isUpVote;
 
-    User.findById(userId, function (err, user) {
-        Answer.findById(answerId, function (err, answer) {
-            Vote.find({answer: answer, user: user}, function (err, votes) {
-                if (err) {
-                    return res.status(400).send({
-                        message: errorHandler.getErrorMessage(err)
-                    });
-                } else if (votes.length == 0) {
-                    var vote = Vote({answer: answer, user: user, isUpVote: isUpVote});
-                    vote.save(errHand);
+    Answer.findById(answerId, function (err, answer) {
+        Vote.find({answerId: answerId, userId: userId}, function (err, votes) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else if (votes.length == 0) {
+                var vote = Vote({answerId: answerId, userId: userId, isUpVote: isUpVote});
+                vote.save(errHand);
 
-                    if (isUpVote)
-                        answer.voteCount++;
-                    else {
-                        answer.voteCount--;
-                    }
-
-                    answer.save(errHand);
+                if (isUpVote) {
+                    answer.voteCount++;
+                    updateUserScore(answer.user._id, 5);
                 } else {
-                    vote = votes[0];
-                    if (vote.isUpVote == isUpVote)
-                        return res.status(200).send({answer: answer});
-                    else if (isUpVote) {
-                        vote.remove();
-                        answer.voteCount += 1;
-                    } else {
-                        vote.remove();
-                        answer.voteCount -= 1;
-                    }
-                    answer.save();
+                    answer.voteCount--;
+                    updateUserScore(answer.user._id, -5);
                 }
 
-                Question.update({'answers._id': answer._id},
-                    {'$set': {'answers.$.voteCount': answer.voteCount}},
-                    function (err, question) {
-                        if (err) {
-                            return res.status(400).send({
-                                message: errorHandler.getErrorMessage(err)
-                            });
-                        }
-                    }
-                );
+                answer.save(errHand);
+            } else {
+                vote = votes[0];
+                if (vote.isUpVote == isUpVote)
+                    return res.status(200).send({answer: answer});
+                else if (isUpVote) {
+                    vote.remove();
+                    answer.voteCount++;
+                    updateUserScore(answer.user._id, 5);
+                } else {
+                    vote.remove();
+                    answer.voteCount--;
+                    updateUserScore(answer.user._id, -5);
+                }
+                answer.save();
+            }
 
-                return res.status(200).send({answer: answer});
-            })
-        });
+            Question.update({'answers._id': answer._id},
+                {'$set': {'answers.$.voteCount': answer.voteCount}},
+                function (err, question) {
+                    if (err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    }
+                }
+            );
+
+            return res.status(200).send({answer: answer});
+        })
     });
 };
