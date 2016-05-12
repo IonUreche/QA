@@ -1,0 +1,44 @@
+<section>
+  <div class="page-header">
+    <h1>Submissions</h1>
+  </div>
+
+  <div class="container">
+    <h2>Evaluation report</h2>
+    <table class="table table-condensed">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Problem</th>
+        <th>Language</th>
+        <th>Status</th>
+        <th>User</th>
+        <th>Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="submission in vm.submissions">
+        <td >
+          <a ui-sref="submissions.details({ submissionId: submission._id})" >
+            <div ng-bind="submission._id">
+            </div>
+          </a>
+
+        </td>
+
+          <td >
+            <a ui-sref="problems.view({ problemId: submission.problem._id })" >
+              <div ng-bind="submission.problem.title">
+              </div>
+            </a>
+          </td>
+
+        <td ng-bind="submission.language"></td>
+        <td ng-bind="submission.evaluationStatus"> </td>
+        <td ng-bind="submission.user.displayName"></td>
+        <td> {{submission.submitted | date:'medium'}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

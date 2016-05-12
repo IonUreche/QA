@@ -1,0 +1,20 @@
+<section>
+    <div class="page-header">
+        <h1>Problems</h1>
+    </div>
+    <div class="list-group">
+        <a ng-repeat="problem in vm.problems" ui-sref="problems.view({ problemId: problem._id })" class="list-group-item">
+            <small class="list-group-item-text">
+                Posted on
+                <span ng-bind="problem.created | date:'mediumDate'"></span>
+                by
+                <span ng-if="problem.user" ng-bind="problem.user.displayName"></span>
+                <span ng-if="!problem.user">Deleted User</span>
+            </small>
+            <h4 class="list-group-item-heading" ng-bind="problem.title"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" ng-if="vm.problems.$resolved && !vm.problems.length">
+        No problems yet, why don't you <a ui-sref="problems.create">create one</a>?
+    </div>
+</section>
