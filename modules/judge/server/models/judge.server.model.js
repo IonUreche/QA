@@ -27,6 +27,10 @@ var ProblemSchema = new Schema({
         trim: true,
         required: 'Content cannot be blank'
     },
+    difficulty: {
+        type: Number,
+        default: 1 // 1, 2, 3
+    },
     question_id: {
         type: String,
         default: ''
