@@ -48,6 +48,10 @@ var UserSchema = new Schema({
     type: Number,
     default: 0
   },
+  solved_problem_ids: [{
+    type: String,
+    default: ''
+  }],
   email: {
     type: String,
     unique: true,

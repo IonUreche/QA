@@ -139,6 +139,9 @@
             };
 
             $http(req).then(function successCallback(res) {
+                console.log(res);
+                Authentication.user = res.data.user;
+
                 $state.go('submissions.list');
             }, function errorCallback(res) {
                 vm.error = res.data.message;

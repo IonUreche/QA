@@ -7,6 +7,7 @@ var path = require('path'),
     problemEval = require('../judge.eval'),
     mongoose = require('mongoose'),
     Problem = mongoose.model('Problem'),
+    User = mongoose.model('User'),
     Submission = mongoose.model('Submission'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
@@ -43,7 +44,7 @@ exports.list = function (req, res) {
 
     Problem.find().sort('-created').select(
         'title user created').populate('user').exec(
-        function(err, problems) {
+        function (err, problems) {
             if (err) {
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
@@ -78,7 +79,7 @@ exports.update = function (req, res) {
     });
 };
 
-exports.delete = function(req, res) {
+exports.delete = function (req, res) {
     var problem = req.problem;
     problem.remove(function (err) {
         if (err) {
@@ -118,13 +119,13 @@ exports.problemByID = function (req, res, next, id) {
 
 
 /*
-* List problem submissions.
-*/
+ * List problem submissions.
+ */
 
-exports.listProblemSubmissions = function(req, res) {
+exports.listProblemSubmissions = function (req, res) {
     var problem = req.problem;
     Submission.find({'problem': problem}).select('-submitted').populate('user problem').exec(
-        function(err, submissions) {
+        function (err, submissions) {
             if (err) {
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
@@ -136,17 +137,46 @@ exports.listProblemSubmissions = function(req, res) {
     );
 };
 
-exports.addSubmission = function(req, res) {
+function updateUserScore(userId, problemId, score) {
+    var res = false;
+    User.findById(userId, function (err, user) {
+        if (err) {
+            return err;
+        } else if (!user) {
+            return 'No user with that identifier has been found';
+        }
+
+        if (user.solved_problem_ids.indexOf(problemId) < 0) {
+            user.score += score;
+            user.solved_problem_ids.push(problemId);
+            user.save();
+            res = true;
+        }
+    });
+    return res;
+}
+
+exports.addSubmission = function (req, res) {
     var problem = req.problem;
     var user = req.user;
     var submission = new Submission(req.body);
     submission.problem = problem;
     submission.submission = req.body.submission;
     submission.language = req.body.language;
-    submission.user = user;
     var ans = problemEval.evaluateProblem(submission, problem);
     submission.evaluationStatus = ans.evaluationStatus;
     submission.results = ans.results;
+
+    if (submission.evaluationStatus == 'Accepted') {
+        if (user.solved_problem_ids.indexOf(problem._id) < 0) {
+            updateUserScore(user, problem._id, 100);
+            user.solved_problem_ids.push(problem._id);
+            user.score += 100;
+        }
+    }
+
+    submission.user = user;
+
     submission.save(function (err) {
         if (err) {
             return res.status(400).send({
@@ -155,12 +185,10 @@ exports.addSubmission = function(req, res) {
         } else {
             res.json(submission);
         }
-
     });
-
 };
 
-exports.readSubmission = function(req, res) {
+exports.readSubmission = function (req, res) {
     // convert mongoose document to JSON
     var submission = req.submission ? req.submission.toJSON() : {};
     res.json(submission)
@@ -191,9 +219,9 @@ exports.submissionByID = function (req, res, next, id) {
     });
 };
 
-exports.allSubmissions = function(req, res) {
+exports.allSubmissions = function (req, res) {
     Submission.find().populate('user problem').exec(
-        function(err, submissions) {
+        function (err, submissions) {
             if (err) {
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
