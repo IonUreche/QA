@@ -14,3 +14,7 @@ module.exports = _.extend(
   require('./users/users.password.server.controller'),
   require('./users/users.profile.server.controller')
 );
+
+exports.isAlwaysAllowed = function (req, res, next) {
+				return next();
+};

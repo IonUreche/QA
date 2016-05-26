@@ -27,6 +27,10 @@ var ProblemSchema = new Schema({
         trim: true,
         required: 'Content cannot be blank'
     },
+    question_id: {
+        type: String,
+        default: ''
+    },
     user: {
         type: Schema.ObjectId,
         ref: 'User'

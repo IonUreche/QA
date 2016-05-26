@@ -1,0 +1,13 @@
+<section ng-style="{'width':'50%', 'margin-left': 'auto' , 'margin-right' : 'auto'}">
+    <div class="page-header">
+        <h1>Rankings</h1>
+    </div>
+
+    <div class="list-group" ng-style="{'padding-left' : '20px', 'padding-right' : '20px'}">
+        <span ng-repeat="user in vm.users" class="row">
+            <h5 ng-style="{'float' : 'left', 'padding-right': '5px'}"> {{user.index}}. </h5>
+            <h5 ng-style="{{user.RatingStyle}}"> {{user.username}}</h5>
+            <h5 ng-style="{'float' : 'right'}"> {{user.score}}</h5>
+        </span>
+    </div>
+</section>

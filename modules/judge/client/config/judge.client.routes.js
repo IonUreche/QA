@@ -26,6 +26,7 @@
       .state('problems.create', {
         url: '/create',
         templateUrl: 'modules/judge/client/views/form-problem.client.view.html',
+        params:{question_id: null},
         controller: 'JudgeController',
         controllerAs: 'vm',
         resolve: {

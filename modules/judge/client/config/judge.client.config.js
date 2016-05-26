@@ -9,27 +9,26 @@
 
   function menuConfig(Menus) {
     Menus.addMenuItem('topbar', {
-      title: 'Problems',
+      title: 'Quests',
       state: 'problems',
       type: 'dropdown',
       roles: ['*']
     });
 
     Menus.addMenuItem('topbar', {
-      title: 'Submissions',
+      title: 'Achievements',
       state: 'submissions.list'
     });
 
-
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'problems', {
-      title: 'List Problems',
+      title: 'Select Quests',
       state: 'problems.list'
     });
 
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'problems', {
-      title: 'Create Problem',
+      title: 'Create New Quest',
       state: 'problems.create',
       roles: ['user']
     });

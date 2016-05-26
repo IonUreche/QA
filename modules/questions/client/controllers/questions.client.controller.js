@@ -20,6 +20,8 @@
         vm.addVote = addVote;
         vm.resolveQuestion = resolveQuestion;
         vm.reopenQuestion = reopenQuestion;
+        vm.addLinkedProblem = addLinkedProblem;
+        vm.viewLinkedProblem = viewLinkedProblem;
         vm.sortedArray = sortedArray;
 
         // Remove existing Question
@@ -120,7 +122,6 @@
         }
 
         function resolveQuestion(answer) {
-
             console.log(answer.user);
 
             $http.post(
@@ -160,6 +161,14 @@
             function errorCallback(res) {
                 vm.error = res.data.message;
             }
+        }
+
+        function addLinkedProblem() {
+            $state.go('problems.create', {question_id: vm.question._id});
+        }
+
+        function viewLinkedProblem() {
+            $state.go('problems.view', {problemId: vm.question.linked_problem_id});
         }
     }
 }());
