@@ -120,7 +120,6 @@
         }
 
         function resolveQuestion(answer) {
-
             console.log(answer.user);
 
             $http.post(

@@ -39,9 +39,9 @@
                 <a class="dropdown-toggle user-header-dropdown-toggle" uib-dropdown-toggle role="button">
                     <span ng-bind="vm.authentication.user.score"
                           style="color: #00ee00; border: 2px solid red; border-radius: 25px; padding: 5px"></span>
-                    <img ng-src="{{vm.badgeImageURL}}"
+                    <img ng-src="{{vm.badgeImageURL()}}"
                          alt="{{vm.authentication.user.displayName}}" class="header-profile-image"/>
-                    <span ng-bind="vm.authentication.user.displayName" ng-style="vm.RatingStyle"></span>
+                    <span ng-bind="vm.authentication.user.displayName" ng-style="vm.RatingStyle()"></span>
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu">
