@@ -1,4 +1,4 @@
-<section>
+<section ng-if="vm.userCanAddProblems()">
     <div class="page-header">
         <h1>{{vm.problem._id ? 'Edit Problem' : 'New Problem'}}</h1>
     </div>

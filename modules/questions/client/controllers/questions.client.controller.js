@@ -109,7 +109,7 @@
                         if (isUpVote)
                             Authentication.user.score += 5;
                         else
-                            Authentication.user.score -= 5;
+                            Authentication.user.score = Authentication.user.score < 5 ? 0 : Authentication.user.score - 5;
                 }
 
             }
@@ -154,7 +154,7 @@
                 question.is_resolved = false;
                 question.resolving_answer_id = '';
                 if (answer.user._id == Authentication.user._id)
-                    Authentication.user.score -= 100;
+                    Authentication.user.score = Authentication.user.score < 100 ? 0 : Authentication.user.score - 100;
             }
 
             function errorCallback(res) {

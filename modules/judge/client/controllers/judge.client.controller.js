@@ -35,6 +35,7 @@
 
         vm.addExample = addExample;
         vm.removeExample = removeExample;
+        vm.userCanAddProblems = userCanAddProblems;
 
         vm.addTest = addTest;
         vm.removeTest = removeTest;
@@ -143,6 +144,11 @@
             }, function errorCallback(res) {
                 vm.error = res.data.message;
             });
+        }
+
+        function userCanAddProblems(){
+            console.log('fsfsaf');
+            return Authentication.user.score >= 200;
         }
 
     }
