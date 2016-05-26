@@ -46,8 +46,9 @@
 	{
 		var color = "grey";
 
-		if(score >= RatingTresholds.R3) color = "red"; else
-		if(score >= RatingTresholds.R2) color = "deepskyblue";
+		if(score >= RatingTresholds.R3) color = 'red'; else
+		if(score >= RatingTresholds.R2) color = 'deepskyblue'; else
+		if(score >= RatingTresholds.R1) color = 'green';
 
 		return "{\'float\': \'left\', \'color\' : \'" + color + "\'}"
 	}
