@@ -63,6 +63,17 @@
         data: {
           pageTitle: 'Question {{ questionResolve.title }}'
         }
+      })
+      .state('Rankings', {
+        url: '/rankings',
+        //templateUrl: 'modules/users/client/views/admin/list-users.client.view.html',
+        //controller: 'UserListController',
+        templateUrl: 'modules/core/client/views/rankings.client.view.html',
+        controller: 'RankingsController',
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Rankings'
+        }
       });
   }
 
