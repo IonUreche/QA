@@ -35,6 +35,10 @@ var QuestionSchema = new Schema({
         type: String,
         default: ""
     },
+    linked_problem_id: {
+        type:String,
+        default: ""
+    },
     problem_id: {
         type: Number,
         default: ""

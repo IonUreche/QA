@@ -7,8 +7,20 @@
         <button ng-click="vm.reopenQuestion()"
                 ng-show="vm.question.is_resolved && vm.question.isCurrentUserOwner"
                 class="btn btn-danger"
-                style="float: right">
+                style="float: right; margin-left: 10px">
             Reopen Question
+        </button>
+        <button ng-click="vm.addLinkedProblem()"
+                ng-show="vm.question.linked_problem_id == '' && vm.question.isCurrentUserOwner"
+                class="btn btn-success"
+                style="float: right">
+            Add problem
+        </button>
+        <button ng-click="vm.viewLinkedProblem()"
+                ng-show="vm.question.linked_problem_id != ''"
+                class="btn btn-success"
+                style="float: right">
+            Solve problem
         </button>
     </div>
 

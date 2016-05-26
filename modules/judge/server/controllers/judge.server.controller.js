@@ -7,6 +7,7 @@ var path = require('path'),
     problemEval = require('../judge.eval'),
     mongoose = require('mongoose'),
     Problem = mongoose.model('Problem'),
+    Question = mongoose.model('Question'),
     User = mongoose.model('User'),
     Submission = mongoose.model('Submission'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
@@ -28,8 +29,13 @@ exports.create = function (req, res) {
         } else {
             res.json(problem);
         }
-
     });
+
+    if(problem.question_id)
+        Question.findById(problem.question_id, function (err, question) {
+            question.linked_problem_id = problem._id;
+            question.save();
+        });
 };
 
 exports.read = function (req, res) {

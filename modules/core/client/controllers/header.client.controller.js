@@ -31,7 +31,6 @@
      */
     function GetBadgeByRating()
     {
-      console.log(1, Authentication.user.score);
       var rating = parseInt(Authentication.user.score);
       var iconUrl = "modules/users/client/img/badges/badge";
       var imageIndex="1";
@@ -44,17 +43,12 @@
 
     function GetRatingStyle()
     {
-      console.log(2, Authentication.user.score);
-
       var rating = parseInt(Authentication.user.score);
       var ccolor = 'grey';
 
       if(rating >= RatingTresholds.R3) ccolor = 'red'; else
       if(rating >= RatingTresholds.R2) ccolor = 'deepskyblue'; else
       if(rating >= RatingTresholds.R1)  ccolor = 'green';
-
-      console.log(rating);
-      console.log(ccolor);
 
       return {'color': ccolor};
     }

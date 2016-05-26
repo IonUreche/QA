@@ -5,10 +5,11 @@
         .module('judge')
         .controller('JudgeController', JudgeController);
 
-    JudgeController.$inject = ['$http', '$scope', '$state', 'problemResolve', 'Authentication', 'FileUploader'];
+    JudgeController.$inject = ['$http', '$scope', '$state', '$stateParams', 'problemResolve', 'Authentication', 'FileUploader'];
 
-    function JudgeController($http, $scope, $state, problem, Authentication, FileUploader) {
+    function JudgeController($http, $scope, $state, $stateParams, problem, Authentication, FileUploader) {
         var vm = this;
+        vm.question_id = $stateParams.question_id;
 
         vm.availableOptions = [{'id': 1, name: 'python2.7'},
             {'id': 2, name: 'python3'},
@@ -65,11 +66,12 @@
 
         // Save Problem
         function save(isValid) {
-
             if (!isValid) {
                 $scope.$broadcast('show-errors-check-validity', 'vm.form.problemForm');
                 return false;
             }
+
+            vm.problem.question_id = vm.question_id;
 
             // TODO: move create/update logic to service
             if (vm.problem._id) {
