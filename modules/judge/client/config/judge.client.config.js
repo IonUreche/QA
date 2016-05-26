@@ -20,7 +20,6 @@
       state: 'submissions.list'
     });
 
-
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'problems', {
       title: 'Select Quests',

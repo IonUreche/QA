@@ -27,5 +27,10 @@
       state: 'questions.create',
       roles: ['user']
     });
+
+    menuService.addMenuItem('topbar', {
+      title: 'Rankings',
+      state: 'Rankings'
+    });
   }
 }());
