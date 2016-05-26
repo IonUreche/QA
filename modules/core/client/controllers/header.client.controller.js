@@ -42,11 +42,11 @@
   function GetRatingStyle(score)
   {
     var rating = parseInt(score);
-    var ccolor = 'black';
+    var ccolor = 'grey';
 
     if(rating >= RatingTresholds.R3) ccolor = 'red'; else
     if(rating >= RatingTresholds.R2) ccolor = 'deepskyblue'; else
-    if(rating >= RatingTresholds.R1)  ccolor = 'grey';
+    if(rating >= RatingTresholds.R1)  ccolor = 'green';
 
     return {'color' : ccolor};
   }

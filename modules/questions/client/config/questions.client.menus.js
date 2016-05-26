@@ -9,7 +9,7 @@
 
   function menuConfig(menuService) {
     menuService.addMenuItem('topbar', {
-      title: 'Questions',
+      title: 'Training Arena',
       state: 'questions',
       type: 'dropdown',
       roles: ['*']
@@ -17,13 +17,13 @@
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'questions', {
-      title: 'List Questions',
+      title: 'Show Questions',
       state: 'questions.list'
     });
 
     // Add the dropdown create item
     menuService.addSubMenuItem('topbar', 'questions', {
-      title: 'Create Question',
+      title: 'Add Question',
       state: 'questions.create',
       roles: ['user']
     });

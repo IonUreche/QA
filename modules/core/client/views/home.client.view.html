@@ -1,27 +1,29 @@
-  <section>
-    <div class="jumbotron text-center">
-      <div class="row">
-        <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
-          <img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/client/img/brand/logo.png" />
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <p class="lead">
-          Open-Source Full-Stack Solution For MEAN Applications
-        </p>
-      </div>
-      <div class="row">ls
-        <p>
-          <a class="btn btn-primary btn-lg" href="http://meanjs.org" target="_blank">Learn more</a>
-        </p>
-      </div>
-    </div>
+<section>
+
 
     <div ng-app="core" ng-controller="HomeTestController">
-      <ol>
-        <li ng-repeat="post in posts" >{{post}}</li>
-      </ol>
+        <div class="jumbotron text-center">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+                    <img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/client/img/IP_Arena.png" style="margin-left: 100px"/>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <p class="lead">Welcome to IP training arena!
+                </p>
+            </div>
+            <div class="row" ng-hide="vm.authentication.user">
+                <p>
+                    <a class="btn btn-success btn-lg" ui-sref="authentication.signup" style="color: #0000cc; margin-bottom: 10px">Start a new
+                        adventure!</a>
+                    <br>
+                    <a class="btn btn-primary btn-lg" ui-sref="authentication.signin" style="color: #00ee00">Continue
+                        your adventure</a>
+                </p>
+            </div>
+        </div>
+
     </div>
 
 </section>

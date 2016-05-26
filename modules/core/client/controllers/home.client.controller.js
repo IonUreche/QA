@@ -4,7 +4,7 @@
   angular
   .module('core')
   .controller('HomeController', HomeController)
-  .controller('HomeTestController', ['$scope', function HomeTestController($scope) {
+  .controller('HomeTestController', ['$scope', 'Authentication', function HomeTestController($scope) {
     $scope.posts = [
       'post 1',
       'post 2',
@@ -14,7 +14,11 @@
     ];
   }]);
 
-  function HomeController() {
+  HomeController.$inject = ['$scope', '$state', 'Authentication', '$http'];
+
+  function HomeController($scope, $state, Authentication, $http) {
     var vm = this;
+    vm.authentication = Authentication;
+
   }
 }());

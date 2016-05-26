@@ -35,6 +35,10 @@ var QuestionSchema = new Schema({
         type: String,
         default: ""
     },
+    problem_id: {
+        type: Number,
+        default: ""
+    },
     answers: [AnswerSchema],
     user: UserSchema
 });
