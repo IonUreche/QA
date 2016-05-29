@@ -18,7 +18,14 @@
             {'id': 4, name: 'javascriptV8'}
         ];
 
+        vm.difficultyOptions = [
+            {'id': 1, name: 'Easy'},
+            {'id': 2, name: 'Medium'},
+            {'id': 3, name: 'Hard'}
+        ];
+
         vm.selectedOption = vm.availableOptions[0];
+        vm.difficulty = vm.difficultyOptions[0];
         vm.uploader = new FileUploader();
         vm.canSubmit = false;
         vm.problem = problem;
@@ -44,6 +51,15 @@
 
         vm.submit = submit;
 
+        vm.difficultyLevels = ['Easy', 'Medium', 'Hard'];
+        vm.getDifficulty = function(){
+            return vm.difficultyLevels[vm.problem.difficulty - 1];
+        };
+        vm.getDifficultyAsList = function(){
+            return new Array(vm.problem.difficulty);
+        };
+
+
         vm.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
             console.info('onWhenAddingFileFailed', item, filter, options);
         };
@@ -68,6 +84,9 @@
 
         // Save Problem
         function save(isValid) {
+            vm.problem.difficulty = vm.difficulty.id;
+            console.log(problem);
+
             if (!isValid) {
                 $scope.$broadcast('show-errors-check-validity', 'vm.form.problemForm');
                 return false;

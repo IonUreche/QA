@@ -154,6 +154,7 @@ function updateUserScore(userId, problemId, score) {
 
         if (user.solved_problem_ids.indexOf(problemId) < 0) {
             user.score += score;
+            user.score = Math.max(0, user.score);
             user.solved_problem_ids.push(problemId);
             user.save();
             res = true;
@@ -173,11 +174,12 @@ exports.addSubmission = function (req, res) {
     submission.evaluationStatus = ans.evaluationStatus;
     submission.results = ans.results;
 
+    var score = 50 * problem.difficulty;
     if (submission.evaluationStatus == 'Accepted') {
         if (user.solved_problem_ids.indexOf(problem._id) < 0) {
-            updateUserScore(user, problem._id, 100);
+            updateUserScore(user, problem._id, score);
             user.solved_problem_ids.push(problem._id);
-            user.score += 100;
+            user.score += score;
         }
     }
 

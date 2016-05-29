@@ -124,6 +124,8 @@ exports.reopen = function (req, res) {
         }
 
         user.score -= 100;
+        user.score = Math.max(0, user.score);
+
         user.save();
     });
 

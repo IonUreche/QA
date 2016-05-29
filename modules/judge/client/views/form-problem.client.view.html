@@ -3,26 +3,38 @@
         <h1>{{vm.problem._id ? 'Edit Problem' : 'New Problem'}}</h1>
     </div>
     <div class="col-md-12">
-        <form name="vm.form.problemForm" class="form-horizontal" ng-submit="vm.save(vm.form.problemForm.$valid)" novalidate>
+        <form name="vm.form.problemForm" class="form-horizontal" ng-submit="vm.save(vm.form.problemForm.$valid)"
+              novalidate>
             <fieldset>
                 <div class="form-group" show-errors>
                     <label class="control-label" for="title">Title</label>
-                    <input name="title" type="text" ng-model="vm.problem.title" id="title" class="form-control" placeholder="Title" required>
+                    <input name="title" type="text" ng-model="vm.problem.title" id="title" class="form-control"
+                           placeholder="Title" required>
                     <div ng-messages="vm.form.problemForm.title.$error" role="alert">
                         <p class="help-block error-text" ng-message="required">Problem title is required.</p>
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label" for="content">Difficulty </label><br>
+                    <select name="difficultySelect" id="difficultySelect"
+                            ng-options="option.name for option in vm.difficultyOptions track by option.id"
+                            ng-model="vm.difficulty">
+                    </select>
+                </div>
+                <div class="form-group">
                     <label class="control-label" for="content">Content</label>
-                    <textarea name="content" data-ng-model="vm.problem.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+                    <textarea name="content" data-ng-model="vm.problem.content" id="content" class="form-control"
+                              cols="30" rows="10" placeholder="Content"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="input">Input</label>
-                    <textarea name="input" data-ng-model="vm.problem.input" id="input" class="form-control" cols="30" rows="5" placeholder="Input"></textarea>
+                    <textarea name="input" data-ng-model="vm.problem.input" id="input" class="form-control" cols="30"
+                              rows="5" placeholder="Input"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="output">Output</label>
-                    <textarea name="output" data-ng-model="vm.problem.output" id="output" class="form-control" cols="30" rows="5" placeholder="Output"></textarea>
+                    <textarea name="output" data-ng-model="vm.problem.output" id="output" class="form-control" cols="30"
+                              rows="5" placeholder="Output"></textarea>
                 </div>
                 Examples
                 <ul>
@@ -30,36 +42,40 @@
                         Example # {{$index}}:
                         <div class="form-group">
                             <label class="control-label" for="exampleInput">Input</label>
-                            <textarea name="exampleInput" data-ng-model="example.input" id="exampleInput" class="form-control" cols="30" rows="2" placeholder="Input"></textarea>
+                            <textarea name="exampleInput" data-ng-model="example.input" id="exampleInput"
+                                      class="form-control" cols="30" rows="2" placeholder="Input"></textarea>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="exampleOutput">Output</label>
-                            <textarea name="exampleOutput" data-ng-model="example.output" id="exampleOutput" class="form-control" cols="30" rows="2" placeholder="Output"></textarea>
+                            <textarea name="exampleOutput" data-ng-model="example.output" id="exampleOutput"
+                                      class="form-control" cols="30" rows="2" placeholder="Output"></textarea>
                         </div>
                     </li>
                 </ul>
-              <div>
-                <input type="button" value="Add example" ng-click="vm.addExample()" class="btn btn-success">
-                <input type="button" value="Remove example" ng-click="vm.removeExample()" class="btn btn-danger">
-              </div>
-              <br/>
+                <div>
+                    <input type="button" value="Add example" ng-click="vm.addExample()" class="btn btn-success">
+                    <input type="button" value="Remove example" ng-click="vm.removeExample()" class="btn btn-danger">
+                </div>
+                <br/>
                 Tests
                 <ul>
-                  <li ng-repeat="test in vm.problem.tests">
-                    Test # {{$index}}:
-                    <div class="form-group">
-                      <label class="control-label" for="testInput">Input</label>
-                      <textarea name="testInput" data-ng-model="test.input" id="testInput" class="form-control" cols="30" rows="2" placeholder="Input"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label" for="testOutput">Ouput</label>
-                      <textarea name="testOutput" data-ng-model="test.output" id="testOutput" class="form-control" cols="30" rows="2" placeholder="Output"></textarea>
-                    </div>
-                  </li>
+                    <li ng-repeat="test in vm.problem.tests">
+                        Test # {{$index}}:
+                        <div class="form-group">
+                            <label class="control-label" for="testInput">Input</label>
+                            <textarea name="testInput" data-ng-model="test.input" id="testInput" class="form-control"
+                                      cols="30" rows="2" placeholder="Input"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="testOutput">Ouput</label>
+                            <textarea name="testOutput" data-ng-model="test.output" id="testOutput" class="form-control"
+                                      cols="30" rows="2" placeholder="Output"></textarea>
+                        </div>
+                    </li>
                 </ul>
                 <div>
-                  <input type="button" value="Add test" ng-click="vm.addTest()" class="btn btn-success">
-                  <input type="button" value="Remove test" ng-click="vm.removeTest()" class="btn btn-danger">
+                    <input type="button" value="Add test" ng-click="vm.addTest()" class="btn btn-success">
+                    <input type="button" value="Remove test" ng-click="vm.removeTest()" class="btn btn-danger">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-default">{{vm.problem._id ? 'Update' : 'Create'}}</button>

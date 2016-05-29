@@ -29,6 +29,7 @@ function updateUserScore(userId, score) {
         }
 
         user.score += score;
+        user.score = Math.max(0, user.score);
         user.save();
     });
 }
