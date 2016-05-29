@@ -30,8 +30,7 @@
     Menus.addSubMenuItem('topbar', 'problems', {
       title: 'Create New Quest',
       state: 'problems.create',
-      roles: ['user'],
-      requiredScore: 200
+      roles: ['user']
     });
   }
 })();

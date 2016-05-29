@@ -1,8 +1,8 @@
 (function () {
     'use strict';
     angular
-        .module('questions')
-        .controller('QuestionsController', QuestionsController);
+      .module('questions')
+      .controller('QuestionsController', QuestionsController);
 
     QuestionsController.$inject = ['$scope', '$state', 'questionResolve', 'answerResolve', '$window', 'Authentication', '$http'];
 
@@ -81,8 +81,8 @@
             return question.user._id == Authentication.user._id;
         }
 
-       function customOrder(question, answer) {
-           var sortRating = question.resolving_answer_id == answer._id ? 2000000000 : 0;
+        function customOrder(question, answer) {
+            var sortRating = question.resolving_answer_id == answer._id ? 2000000000 : 0;
 
             return sortRating + answer.voteCount;
         }
@@ -98,10 +98,10 @@
 
         function addVote(answer, isUpVote) {
             $http
-                .post(
-                    'api/votes/',
-                    {answer: answer, user: Authentication.user, question_id: vm.question._id, isUpVote: isUpVote})
-                .then(successCallback, errorCallback);
+              .post(
+                'api/votes/',
+                {answer: answer, user: Authentication.user, question_id: vm.question._id, isUpVote: isUpVote})
+              .then(successCallback, errorCallback);
 
             function successCallback(res) {
                 if(answer.voteCount != res.data.answer.voteCount) {
@@ -111,9 +111,8 @@
                         if (isUpVote)
                             Authentication.user.score += 5;
                         else
-                            Authentication.user.score = Authentication.user.score < 5 ? 0 : Authentication.user.score - 5;
+                            Authentication.user.score = Math.max(0, Authentication.user.score - 5);
                 }
-
             }
 
             function errorCallback(res) {
@@ -122,10 +121,11 @@
         }
 
         function resolveQuestion(answer) {
+            console.log(answer.user);
 
             $http.post(
-                'api/questions/resolve/' + vm.question._id,
-                {answer: answer, user: answer.user, question_id: vm.question._id}
+              'api/questions/resolve/' + vm.question._id,
+              {answer: answer, user: answer.user, question_id: vm.question._id}
             ).then(successCallback, errorCallback);
 
             function successCallback(res) {
@@ -146,15 +146,15 @@
             })[0];
 
             $http.post(
-                'api/questions/reopen/' + vm.question._id,
-                {user: answer.user, question_id: vm.question._id}
+              'api/questions/reopen/' + vm.question._id,
+              {user: answer.user, question_id: vm.question._id}
             ).then(successCallback, errorCallback);
 
             function successCallback(res) {
                 question.is_resolved = false;
                 question.resolving_answer_id = '';
                 if (answer.user._id == Authentication.user._id)
-                    Authentication.user.score = Authentication.user.score < 100 ? 0 : Authentication.user.score - 100;
+                    Authentication.user.score = Math.max(0, Authentication.user.score - 100);
             }
 
             function errorCallback(res) {
@@ -171,3 +171,4 @@
         }
     }
 }());
+
