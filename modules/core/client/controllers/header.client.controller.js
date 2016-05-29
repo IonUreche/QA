@@ -16,6 +16,7 @@
     vm.authentication = Authentication;
     vm.isCollapsed = false;
     vm.menu = menuService.getMenu('topbar');
+    vm.CanView = CanView
 
     vm.RatingStyle = GetRatingStyle;
     vm.badgeImageURL = GetBadgeByRating;
@@ -51,6 +52,13 @@
       if(rating >= RatingTresholds.R1)  ccolor = 'green';
 
       return {'color': ccolor};
+    }
+
+    function CanView(item) {
+      if(item.requiredScore === null) return false;
+      if(item.title === "Create New Quest" && vm.authentication.user.score < RatingTresholds.R3) return false;
+      if(item.title === "Chat" && vm.authentication.user.score < RatingTresholds.R2) return false;
+      return true;
     }
   }
 }());

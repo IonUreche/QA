@@ -9,6 +9,7 @@
 
     function JudgeController($http, $scope, $state, $stateParams, problem, Authentication, FileUploader) {
         var vm = this;
+        var RatingTresholds = {R1 : 0, R2 : 100, R3 : 200};
         vm.question_id = $stateParams.question_id;
 
         vm.availableOptions = [{'id': 1, name: 'python2.7'},
@@ -142,7 +143,6 @@
             };
 
             $http(req).then(function successCallback(res) {
-                console.log(res);
                 Authentication.user = res.data.user;
 
                 $state.go('submissions.list');
@@ -152,8 +152,7 @@
         }
 
         function userCanAddProblems(){
-            console.log('fsfsaf');
-            return Authentication.user.score >= 200;
+            return Authentication.user.score >= RatingTresholds.R3;
         }
 
     }

@@ -122,7 +122,6 @@
         }
 
         function resolveQuestion(answer) {
-            console.log(answer.user);
 
             $http.post(
                 'api/questions/resolve/' + vm.question._id,

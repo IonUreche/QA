@@ -9,10 +9,12 @@
 
   function ChatController($scope, $state, Authentication, Socket) {
     var vm = this;
+    var RatingTresholds = {R1 : 0, R2 : 100, R3 : 200};
 
     vm.messages = [];
     vm.messageText = '';
     vm.sendMessage = sendMessage;
+    vm.CanView = CanView;
 
     init();
 
@@ -50,6 +52,10 @@
 
       // Clear the message text
       vm.messageText = '';
+    }
+
+    function CanView(){
+      return Authentication.user.score >= RatingTresholds.R2;
     }
   }
 }());

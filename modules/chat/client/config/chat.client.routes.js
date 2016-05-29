@@ -14,6 +14,7 @@
         templateUrl: 'modules/chat/client/views/chat.client.view.html',
         controller: 'ChatController',
         controllerAs: 'vm',
+        title : 'Chat',
         data: {
           roles: ['user', 'admin'],
           pageTitle: 'Chat'

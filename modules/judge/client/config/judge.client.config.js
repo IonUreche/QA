@@ -17,20 +17,21 @@
 
     Menus.addMenuItem('topbar', {
       title: 'Achievements',
-      state: 'submissions.list'
+      state: 'submissions.list',
     });
 
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'problems', {
       title: 'Select Quests',
-      state: 'problems.list'
+      state: 'problems.list',
     });
 
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'problems', {
       title: 'Create New Quest',
       state: 'problems.create',
-      roles: ['user']
+      roles: ['user'],
+      requiredScore: 200
     });
   }
 })();
