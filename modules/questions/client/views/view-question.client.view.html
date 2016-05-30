@@ -11,7 +11,7 @@
             Reopen Question
         </button>
         <button ng-click="vm.addLinkedProblem()"
-                ng-show="vm.question.linked_problem_id == '' && vm.question.isCurrentUserOwner"
+                ng-show="vm.question.linked_problem_id == '' && vm.question.isCurrentUserOwner && vm.hasRank()"
                 class="btn btn-success"
                 style="float: right">
             Add problem

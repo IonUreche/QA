@@ -9,7 +9,7 @@
 
     function JudgeController($http, $scope, $state, $stateParams, problem, Authentication, FileUploader) {
         var vm = this;
-        var RatingTresholds = {R1 : 0, R2 : 100, R3 : 200};
+        var RatingTresholds = {R1 : 0, R2 : 200, R3 : 500};
         vm.question_id = $stateParams.question_id;
 
         vm.availableOptions = [{'id': 1, name: 'python2.7'},

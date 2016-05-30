@@ -9,7 +9,7 @@
 
   function ChatController($scope, $state, Authentication, Socket) {
     var vm = this;
-    var RatingTresholds = {R1 : 0, R2 : 100, R3 : 200};
+    var RatingTresholds = {R1 : 0, R2 : 200, R3 : 500};
 
     vm.messages = [];
     vm.messageText = '';

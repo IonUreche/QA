@@ -7,7 +7,7 @@
 
   HeaderController.$inject = ['$scope', '$state', 'Authentication', 'menuService'];
 
-  var RatingTresholds = {R1 : 0, R2 : 100, R3 : 200};
+  var RatingTresholds = {R1 : 0, R2 : 200, R3 : 500};
 
   function HeaderController($scope, $state, Authentication, menuService) {
     var vm = this;

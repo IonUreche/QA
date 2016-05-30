@@ -8,6 +8,7 @@
 
     function QuestionsController($scope, $state, question, answer, $window, Authentication, $http) {
         var vm = this;
+        var RatingTresholds = {R1 : 0, R2 : 200, R3 : 500};
 
         vm.question = question;
         vm.answer = answer;
@@ -23,6 +24,7 @@
         vm.addLinkedProblem = addLinkedProblem;
         vm.viewLinkedProblem = viewLinkedProblem;
         vm.sortedArray = sortedArray;
+        vm.hasRank =  hasRank;
 
         // Remove existing Question
         function remove() {
@@ -168,6 +170,10 @@
 
         function viewLinkedProblem() {
             $state.go('problems.view', {problemId: vm.question.linked_problem_id});
+        }
+
+        function hasRank(){
+            return vm.authentication.user.score >= RatingTresholds.R3;
         }
     }
 }());

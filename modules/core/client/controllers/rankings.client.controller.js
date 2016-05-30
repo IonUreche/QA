@@ -7,7 +7,7 @@
 
 	RankingsController.$inject = ['$scope', '$state', '$http'];
 
-	var RatingTresholds = {R1 : 0, R2 : 100, R3 : 200};
+	var RatingTresholds = {R1 : 0, R2 : 200, R3 : 500};
 
 	function RankingsController($scope, $state, $http) {
 		var vm = this;
